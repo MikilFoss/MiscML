@@ -1,9 +1,13 @@
-This a simple way of embedding a character down from a one hot vector of size 26 to a smaller vector
+This a simple way of encoding a character down from a one hot vector of size 26 to a smaller vector.
 
-The model does this through having a network architure that bottlenecks the input vector down to a small layerand then re expands it.
+The model does this through having a network architure that bottlenecks the input vector down to a small layer and then re expands it.
 
 The model is able to be trained by passing any character through it and checking how well it was decoded.
 
-It's also a personal experiment on how small of a vector can a character be encoded to.
-
-Given a network size of two 64 node hidden layers, it can be compressed to a 3 node layer.
+Chart of the smallest model size I found for a given vector sixe (Note: parameter count includes the encoder and decoder):
+| Encoded Vector Size|  Parameter Count |
+|----------|----------|
+| 5  | 2.1K |
+| 4  | 3.9K  |
+| 3  | 28.7K  |
+| 2  | N/A |
