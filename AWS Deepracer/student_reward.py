@@ -1,13 +1,10 @@
 import math
-#This is the initial reward function used to train the model
 def reward_function(params):
     all_wheels_on_track = params['all_wheels_on_track']
     distance_from_center = params['distance_from_center']
     track_width = params['track_width']
     speed = params['speed']
     steering = abs(params['steering_angle'])
-    x_pos = params['x']
-    y_pos = params['y']
     waypoints = params['waypoints']
     closest_waypoints = params['closest_waypoints']
 
@@ -19,23 +16,11 @@ def reward_function(params):
 
     if not all_wheels_on_track:
         return 1e-3
-    
-    marker_1 = 0.1 * track_width
-    marker_2 = 0.25 * track_width
-    marker_3 = 0.5 * track_width
-
-    # Give higher reward if the car is closer to center line and vice versa
-    if distance_from_center <= marker_1:
-        reward += 0.5
-    elif distance_from_center <= marker_2:
-        reward += 0.25
-    elif distance_from_center <= marker_3:
-        reward += 0.05
-    else:
-        reward = 1e-3
 
     #Promote smooth steering
-    if steering < 2:
+    if steering < 0.5:
+        reward += 3
+    elif steering < 2:
         reward += 1.5
     elif steering < 10:
         reward += 0.5
@@ -60,10 +45,10 @@ def reward_function(params):
     else: 
         reward *= 0.5 # reduce reward for being too off-direction
 
-    MAX_SPEED = 4  
-
-    reward *= (1 + speed / MAX_SPEED)
     
+
+    reward *= speed
+
     if progress == 100:
         reward += 10
 

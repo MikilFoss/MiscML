@@ -1,5 +1,5 @@
 import math
-#This is the initial reward function used to train the model
+#This reward function was used to fine tune the model to go faster
 def reward_function(params):
     all_wheels_on_track = params['all_wheels_on_track']
     distance_from_center = params['distance_from_center']
@@ -60,9 +60,9 @@ def reward_function(params):
     else: 
         reward *= 0.5 # reduce reward for being too off-direction
 
-    MAX_SPEED = 4  
+    MIN_SPEED = 1.2  # Maximum car speed
 
-    reward *= (1 + speed / MAX_SPEED)
+    reward *=  (speed / MIN_SPEED)
     
     if progress == 100:
         reward += 10

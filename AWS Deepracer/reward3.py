@@ -1,5 +1,5 @@
 import math
-#This is the initial reward function used to train the model
+#This reward function was used to fine tune the model to go faster
 def reward_function(params):
     all_wheels_on_track = params['all_wheels_on_track']
     distance_from_center = params['distance_from_center']
@@ -20,28 +20,6 @@ def reward_function(params):
     if not all_wheels_on_track:
         return 1e-3
     
-    marker_1 = 0.1 * track_width
-    marker_2 = 0.25 * track_width
-    marker_3 = 0.5 * track_width
-
-    # Give higher reward if the car is closer to center line and vice versa
-    if distance_from_center <= marker_1:
-        reward += 0.5
-    elif distance_from_center <= marker_2:
-        reward += 0.25
-    elif distance_from_center <= marker_3:
-        reward += 0.05
-    else:
-        reward = 1e-3
-
-    #Promote smooth steering
-    if steering < 2:
-        reward += 1.5
-    elif steering < 10:
-        reward += 0.5
-    elif steering < 15:
-        reward += 0.25
-    
     #Reward for following waypoints
     direction_waypoint = math.atan2(
     waypoints[closest_waypoints[1]][1] - waypoints[closest_waypoints[0]][1],
@@ -60,10 +38,10 @@ def reward_function(params):
     else: 
         reward *= 0.5 # reduce reward for being too off-direction
 
-    MAX_SPEED = 4  
+    MIN_SPEED = 1.4  # Maximum car speed
 
-    reward *= (1 + speed / MAX_SPEED)
-    
+    reward *=  (speed / MIN_SPEED)**2
+
     if progress == 100:
         reward += 10
 
