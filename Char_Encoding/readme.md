@@ -4,7 +4,7 @@ The model does this through having a network architure that bottlenecks the inpu
 
 The model is able to be trained by passing any character through it and checking how well it was decoded.
 
-Chart of the smallest model size I found for a given vector sixe (Note: parameter count includes the encoder and decoder):
+Chart of the smallest model size I found for a given vector size (Note: parameter count includes the encoder and decoder):
 | Encoded Vector Size|  Parameter Count |
 |----------|----------|
 | 5  | 2.1K |
